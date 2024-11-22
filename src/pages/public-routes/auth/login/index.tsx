@@ -1,8 +1,8 @@
-import { LogoSwitch } from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { RefreshCw } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { z } from 'zod'
 
@@ -32,7 +32,12 @@ export const Login = () => {
             <main className="w-full max-w-5xl grid lg:grid-cols-2 gap-8 items-center">
 
                 <div className="flex flex-col items-center justify-center lg:justify-end space-y-4">
-                    <LogoSwitch />
+                    <div className="relative w-32 h-32 flex items-center justify-center">
+                        <div className="absolute inset-0 border-4 border-indigo-300 rounded-full" />
+                        <div className="absolute inset-2 border-4 border-indigo-300 rounded-full" />
+                        <div className="absolute inset-4 border-4 border-indigo-300 rounded-full" />
+                        <RefreshCw className="w-16 h-16 text-indigo-300" />
+                    </div>
                     <h1 className="text-4xl font-bold text-white tracking-wider">SWITCH</h1>
                 </div>
 
