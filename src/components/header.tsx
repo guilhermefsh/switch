@@ -5,7 +5,7 @@ import { SidebarContent } from "./sidebar/sidebar-content"
 
 export const Header = () => {
     return (
-        <header className="bg-gradient-to-br to-purple-950 from-indigo-950  shadow-sm">
+        <header className="bg-gradient-to-br to-purple-950 from-indigo-950  shadow-sm border-b border-purple-500">
             <div className=" mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
                 <div className="flex items-center">
                     <Sheet>

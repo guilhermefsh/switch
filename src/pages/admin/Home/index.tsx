@@ -44,7 +44,7 @@ export const Home = () => {
                                 <a href="#">Tarefas</a>
                             </div>
                         </div>
-                        <ScrollArea className="h-[calc(100vh-300px)] rounded-md border">
+                        <ScrollArea className="h-[calc(100vh-300px)] rounded-md border border-purple-500">
                             {notifications.map((notification, index) => (
                                 <div key={notification.id}>
                                     <div className="p-4">
@@ -54,7 +54,7 @@ export const Home = () => {
                                             Visualizar <ChevronRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4" />
                                         </Button>
                                     </div>
-                                    {index < notifications.length - 1 && <Separator />}
+                                    {index < notifications.length - 1 && <Separator className="bg-purple-500" />}
                                 </div>
                             ))}
                         </ScrollArea>

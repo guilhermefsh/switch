@@ -12,10 +12,10 @@ export const SidebarChat = ({ conversations, onSelectConversation, selectedConve
 
     return (
         <>
-            <div className="p-4 border-b bg-gradient-to-br from-indigo-950 to-purple-950">
+            <div className="p-4 border-b border-purple-500 bg-gradient-to-br from-indigo-950 to-purple-950">
                 <div className="relative">
-                    <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                    <Input type="text" placeholder="Search" className="pl-8 max-w-[80%] md:max-w-[100%]" />
+                    <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-purple-500" />
+                    <Input type="text" placeholder="Search" className="pl-8 max-w-[80%] md:max-w-[100%] border-purple-500" />
                 </div>
             </div>
             <ScrollArea className="flex flex-col justify-between bg-gradient-to-br from-indigo-950 to-purple-950 h-full relative">
