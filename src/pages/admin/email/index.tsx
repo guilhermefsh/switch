@@ -30,9 +30,8 @@ export const EmailPage = () => {
                 </div>
                 <div className="flex-grow flex flex-col">
                     <div className="p-4 md:hidden">
-                        <Button variant="outline" onClick={toggleSidebar}>
-                            <Menu className="h-4 w-4 mr-2" />
-                            {sidebarOpen ? 'Close' : 'Open'} Sidebar
+                        <Button className='bg-purple-900 text-white' variant="outline" onClick={toggleSidebar}>
+                            <Menu className="h-8 w-8 mr-2" />
                         </Button>
                     </div>
                     <EmailContent email={selectedEmail} />

@@ -5,7 +5,7 @@ const sidebarLinks = [
     { icon: <Phone className="mr-3 h-5 w-5" />, text: "Ramais", path: "/extensions" },
     { icon: <Mail className="mr-3 h-5 w-5" />, text: "Email", path: "/app/email" },
     { icon: <Newspaper className="mr-3 h-5 w-5" />, text: "Comunicados", path: "/communications" },
-    { icon: <Search className="mr-3 h-5 w-5" />, text: "Index", path: "/index" },
+    { icon: <Search className="mr-3 h-5 w-5" />, text: "Index", path: "/app/document" },
     { icon: <MessageCircle className="mr-3 h-5 w-5" />, text: "Chat", path: "/app/chat" },
 ];
 

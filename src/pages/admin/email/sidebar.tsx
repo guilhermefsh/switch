@@ -1,4 +1,5 @@
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { Mails } from 'lucide-react'
 
 interface Email {
     id: number
@@ -16,6 +17,10 @@ export const Sidebar = ({ emails, onSelectEmail }: SidebarProps) => {
     return (
         <div className="h-full border-r border-purple-500">
             <ScrollArea className="h-full">
+                <div className="w-full flex gap-4 items-center ml-4 mt-2">
+                    <Mails className='text-white w-8 h-8' />
+                    <span className="font-semibold text-white">Caixa de entrada</span>
+                </div>
                 {emails.map((email) => (
                     <div
                         key={email.id}
