@@ -1,9 +1,14 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { auth } from "@/database/database"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { RefreshCw } from "lucide-react"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { toast } from "sonner"
 import { z } from 'zod'
 
 const signInProps = z.object({
@@ -14,7 +19,7 @@ const signInProps = z.object({
 type SignInForm = z.infer<typeof signInProps>
 
 export const Login = () => {
-
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -23,8 +28,23 @@ export const Login = () => {
         resolver: zodResolver(signInProps)
     });
 
-    async function handleLogin(data: SignInForm) {
-        console.log(data)
+    useEffect(() => {
+        async function handleLogout() {
+            await signOut(auth)
+        }
+
+        handleLogout()
+    }, [])
+
+    async function handleLogin(user: SignInForm) {
+        try {
+            await signInWithEmailAndPassword(auth, user.email, user.password)
+            toast.success("Login realizado com sucesso!")
+            navigate("/app/home")
+        } catch (error) {
+            toast.error("Falha ao realizar o login. Verifique suas credenciais.")
+        }
+
     }
 
     return (

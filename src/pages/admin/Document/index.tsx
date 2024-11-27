@@ -36,7 +36,7 @@ export const DocumentSearch = () => {
     }
 
     return (
-        <div className='h-screen'>
+        <div className='h-screen bg-gradient-to-br from-indigo-950 to-purple-950'>
             <div className="container mx-auto px-4 py-8 bg-gradient-to-br from-indigo-950 to-purple-950 h-full">
                 <div className="flex items-center mb-6">
                     <Link to="/app/home" onClick={handleBack} className="mr-4">
@@ -45,7 +45,7 @@ export const DocumentSearch = () => {
                     <h1 className="text-2xl font-bold text-white">Busca de documentos</h1>
                 </div>
 
-                <Card className="mb-6">
+                <Card className="mb-6 bg-purple-950">
                     <CardContent className="pt-6">
                         <div className="flex gap-4">
                             <Input
@@ -53,7 +53,7 @@ export const DocumentSearch = () => {
                                 placeholder="Pesquisar documentos"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="flex-grow"
+                                className="flex-grow text-white"
                             />
                             <Button onClick={handleSearch}>
                                 <Search className="mr-2 h-4 w-4" /> Pesquisar
