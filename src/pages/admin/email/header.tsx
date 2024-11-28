@@ -1,8 +1,13 @@
-import { ArrowLeft, RefreshCcw } from 'lucide-react'
-import { Notification } from './notification'
-import { Link } from 'react-router-dom'
+import { ArrowLeft, RefreshCcw } from "lucide-react";
+import { Notification } from "./notification";
+import { Link } from "react-router-dom";
+import { EmailProps } from ".";
 
-export const Header = () => {
+interface HeaderProps {
+    newEmail: EmailProps | null;
+}
+
+export const Header = ({ newEmail }: HeaderProps) => {
     return (
         <header className="flex items-center justify-between p-4 border-b border-purple-500">
             <Link to="/app/home">
@@ -13,8 +18,7 @@ export const Header = () => {
                 <RefreshCcw className="h-6 w-6 text-primary" />
                 <span className="text-2xl font-bold text-white">Switch</span>
             </div>
-            <Notification />
+            <Notification email={newEmail} />
         </header>
-    )
-}
-
+    );
+};
