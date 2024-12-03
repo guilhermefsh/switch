@@ -9,6 +9,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { auth, db } from "@/database/database"
 import { toast } from "sonner"
 import { doc, setDoc } from "firebase/firestore"
+import { useNavigate } from "react-router-dom"
 
 const schema = z.object({
     name: z.string().min(3, "O nome deve conter no mínimo 3 caracteres"),
@@ -19,7 +20,8 @@ const schema = z.object({
 
 type RegistrationFormData = z.infer<typeof schema>
 
-export default function RegistrationForm() {
+export const RegistrationForm = () => {
+    const navigate = useNavigate()
     const {
         register,
         handleSubmit,
@@ -31,7 +33,7 @@ export default function RegistrationForm() {
             mode: "onChange",
         })
 
-    const handleRegisterUser = async (user: RegistrationFormData) => {
+    async function handleRegisterUser(user: RegistrationFormData) {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, user.email, user.password);
 
@@ -108,7 +110,7 @@ export default function RegistrationForm() {
                 <Label htmlFor="role" className="text-gray-100">Tipo de usuário</Label>
                 <Select onValueChange={(value) => setValue("role", value as "admin" | "empresa")}>
                     <SelectTrigger className="w-full mt-1 text-white">
-                        <SelectValue placeholder="Select your role" />
+                        <SelectValue placeholder="Selecione o tipo de usuário" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="admin">Admin</SelectItem>
@@ -118,13 +120,21 @@ export default function RegistrationForm() {
                 {errors.role && <p className="text-red-500">{errors.role.message}</p>}
             </div>
 
-            <div>
+            <div className="flex flex-col gap-4">
                 <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     {isSubmitting ? "Registrando..." : "Registrar"}
+                </Button>
+                <Button
+                    type="button"
+                    onClick={() => navigate(-1)}
+                    disabled={isSubmitting}
+                    className="group relative w-full flex justify-center py-2 px-4 border border-purple-400 text-sm font-medium rounded-md bg-transparent"
+                >
+                    Voltar
                 </Button>
             </div>
         </form>

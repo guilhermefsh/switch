@@ -1,5 +1,7 @@
-import { Link } from "react-router-dom";
-import { Mail, MessageCircle, Newspaper, Phone, Search } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { LogOut, Mail, MessageCircle, Newspaper, Phone, Search } from "lucide-react";
+import { signOut } from 'firebase/auth';
+import { auth } from "@/database/database";
 
 const sidebarLinks = [
     { icon: <Phone className="mr-3 h-5 w-5" />, text: "Ramais", path: "/extensions" },
@@ -9,17 +11,35 @@ const sidebarLinks = [
     { icon: <MessageCircle className="mr-3 h-5 w-5" />, text: "Chat", path: "/app/chat" },
 ];
 
-export const SidebarContent = () => (
-    <nav className="mt-4">
-        {sidebarLinks.map(({ icon, text, path }) => (
+
+export const SidebarContent = () => {
+    const navigate = useNavigate();
+
+    async function handleLogout() {
+        await signOut(auth);
+        navigate("/login");
+    }
+
+    return (
+        <nav className="mt-4    ">
+            {sidebarLinks.map(({ icon, text, path }) => (
+                <Link
+                    key={path}
+                    to={path}
+                    className="flex items-center px-4 py-2 text-gray-100 hover:bg-purple-950 hover:text-secondary"
+                >
+                    {icon}
+                    {text}
+                </Link>
+            ))}
             <Link
-                key={path}
-                to={path}
+                to="/login"
                 className="flex items-center px-4 py-2 text-gray-100 hover:bg-purple-950 hover:text-secondary"
+                onClick={handleLogout}
             >
-                {icon}
-                {text}
+                <LogOut className="mr-3 h-5 w-5" />
+                Sair
             </Link>
-        ))}
-    </nav>
-);
+        </nav>
+    )
+};

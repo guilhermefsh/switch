@@ -6,7 +6,7 @@ export const Sidebar = () => {
             <div className="p-4">
                 <h2 className="text-xl font-semibold text-white">Menu</h2>
             </div>
-            <nav>
+            <nav className="flex flex-col justify-between h-full">
                 <SidebarContent />
             </nav>
         </aside>

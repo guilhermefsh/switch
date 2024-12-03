@@ -6,6 +6,7 @@ import { EmailPage } from "@/pages/admin/email";
 import { RegisterUserPage } from "@/pages/admin/Register-user";
 import { Home } from "@/pages/admin/Home";
 import { Chat } from "@/pages/admin/Chat";
+import { NotFound } from "@/pages/public-routes/error/404";
 
 export const router = createBrowserRouter([
     {
@@ -42,4 +43,8 @@ export const router = createBrowserRouter([
             }
         ],
     },
+    {
+        path: "*",
+        element: <NotFound />
+    }
 ]);

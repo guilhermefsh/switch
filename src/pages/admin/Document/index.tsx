@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Search, Download, Eye, ArrowLeft } from 'lucide-react'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -11,10 +11,12 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { searchDocuments, Document, mockDocuments } from '@/utils/document-util'
+import { searchDocuments, Document, mockDocuments, uploadDocument, downloadDocument } from '@/utils/document-util'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '@/context/AuthContext'
 
 export const DocumentSearch = () => {
+    const { user } = useContext(AuthContext)
     const [searchQuery, setSearchQuery] = useState('')
     const [searchResults, setSearchResults] = useState<Document[]>(mockDocuments)
 
@@ -23,23 +25,45 @@ export const DocumentSearch = () => {
         setSearchResults(results)
     }
 
-    const handleDownload = (docId: string) => {
-        console.log(`Downloading document ${docId}`)
-    }
+    const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
 
-    const handleView = (docId: string) => {
-        console.log(`Viewing document ${docId}`)
-    }
+        try {
+            const userId = user?.uid;
+            if (!userId) {
+                throw new Error("User ID is required for uploading a document");
+            }
+            const url = await uploadDocument(file, userId);
+            console.log("Document uploaded successfully. URL:", url);
+            alert("Upload realizado com sucesso!");
+        } catch (error) {
+            console.error("Error uploading document:", error);
+            alert("Erro ao fazer upload do documento.");
+        }
+    };
 
-    const handleBack = () => {
-        console.log('Navigating back')
-    }
+
+    const handleDownload = async (docId: string) => {
+        try {
+            const userId = user?.uid;
+            if (!userId) {
+                throw new Error("User ID is required for downloading a document");
+            }
+            const url = await downloadDocument(docId, userId);
+            window.open(url, "_blank");
+        } catch (error) {
+            console.error("Error downloading document:", error);
+            alert("Erro ao baixar o documento.");
+        }
+    };
+
 
     return (
         <div className='h-screen bg-gradient-to-br from-indigo-950 to-purple-950'>
             <div className="container mx-auto px-4 py-8 bg-gradient-to-br from-indigo-950 to-purple-950 h-full">
                 <div className="flex items-center mb-6">
-                    <Link to="/app/home" onClick={handleBack} className="mr-4">
+                    <Link to="/app/home" className="mr-4">
                         <ArrowLeft className="mr-2 h-8 w-8 text-white" />
                     </Link>
                     <h1 className="text-2xl font-bold text-white">Busca de documentos</h1>
@@ -61,6 +85,15 @@ export const DocumentSearch = () => {
                         </div>
                     </CardContent>
                 </Card>
+                <div className="mb-">
+                    <label htmlFor="upload-document" className="block text-white mb-2">Upload de Documento:</label>
+                    <input
+                        type="file"
+                        id="upload-document"
+                        onChange={handleUpload}
+                        className="block w-full text-white bg-purple-950 border border-white mb-4 rounded py-2 px-4 max-w-[600px]"
+                    />
+                </div>
 
                 <Card className='bg-purple-950'>
                     <CardContent>
@@ -85,7 +118,7 @@ export const DocumentSearch = () => {
                                                     <Download className="mr-2 h-4 w-4" />
                                                     Download
                                                 </Button>
-                                                <Button variant="outline" size="sm" onClick={() => handleView(doc.id)}>
+                                                <Button variant="outline" size="sm" onClick={() => console.log('oi')}>
                                                     <Eye className="mr-2 h-4 w-4" />
                                                     View
                                                 </Button>

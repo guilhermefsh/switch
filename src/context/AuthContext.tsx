@@ -1,6 +1,7 @@
 import { onAuthStateChanged } from 'firebase/auth';
-import { ReactNode, createContext, useState, useEffect, useMemo } from 'react'
-import { auth } from '@/database/database'
+import { getDoc, doc } from 'firebase/firestore';
+import { ReactNode, createContext, useState, useEffect, useMemo } from 'react';
+import { auth, db } from '@/database/database';
 
 interface AuthProviderProps {
     children: ReactNode;
@@ -10,39 +11,62 @@ type AuthContextData = {
     signed: boolean;
     loadingAuth: boolean;
     user: UserProps | null;
-}
+};
 
 interface UserProps {
     uid: string;
     name: string | null;
     email: string | null;
+    role: string | null;
 }
 
-export const AuthContext = createContext({} as AuthContextData)
+export const AuthContext = createContext({} as AuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps) {
     const [user, setUser] = useState<UserProps | null>(null);
     const [loadingAuth, setLoadingAuth] = useState(true);
 
     useEffect(() => {
-        const onsub = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUser({
-                    uid: user.uid,
-                    name: user?.displayName,
-                    email: user?.email
-                })
-                setLoadingAuth(false);
+        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+            if (firebaseUser) {
+                try {
+
+                    const userDocRef = doc(db, 'users', firebaseUser.uid);
+                    const userSnapshot = await getDoc(userDocRef);
+
+                    if (userSnapshot.exists()) {
+                        const userData = userSnapshot.data();
+                        setUser({
+                            uid: firebaseUser.uid,
+                            name: userData.name || firebaseUser.displayName || null,
+                            email: userData.email || firebaseUser.email || null,
+                            role: userData.role || null,
+                        });
+                    } else {
+                        console.error('Documento do usuário não encontrado no Firestore.');
+                        setUser({
+                            uid: firebaseUser.uid,
+                            name: firebaseUser.displayName ?? null,
+                            email: firebaseUser.email ?? null,
+                            role: null,
+                        });
+                    }
+                } catch (error) {
+                    console.error('Erro ao buscar dados do Firestore:', error);
+                    setUser(null);
+                } finally {
+                    setLoadingAuth(false);
+                }
             } else {
                 setUser(null);
                 setLoadingAuth(false);
             }
-        })
-        return () => {
-            onsub();
-        }
+        });
 
-    }, [])
+        return () => {
+            unsubscribe();
+        };
+    }, []);
 
     const contextValue = useMemo(() => ({
         signed: !!user,
@@ -54,7 +78,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         <AuthContext.Provider value={contextValue}>
             {children}
         </AuthContext.Provider>
-    )
+    );
 }
 
-export default AuthProvider
+export default AuthProvider;
