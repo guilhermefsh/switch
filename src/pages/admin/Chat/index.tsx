@@ -68,7 +68,7 @@ export const Chat = () => {
             </aside>
 
             <main className="flex-1 flex flex-col ">
-                <header className="bg-gradient-to-br from-indigo-950 to-purple-950 border-b border-purple-500 p-[22px] flex items-center justify-between">
+                <header className={`bg-gradient-to-br from-indigo-950 to-purple-950 border-b border-purple-500 ${selectedConversation ? "p-[12px]" : "p-[14px]"}  flex items-center justify-between`}>
                     <div className={`'h-6' ${selectedConversation ? "hidden" : ""}`}>
                         <Link to="/app/home" className={`hidden text-white ${selectedConversation ? "hidden" : ""}`}>
                             <ArrowLeft className="h-6 w-6" />
@@ -115,7 +115,7 @@ export const Chat = () => {
                     )}
                 </ScrollArea>
 
-                <footer className="bg-gradient-to-br from-indigo-950 to-purple-950 border-t border-purple-500 p-4">
+                <footer className="bg-gradient-to-br from-indigo-950 to-purple-950 border-t border-purple-500 p-[10px]">
                     <div className="flex items-center">
                         <Input
                             type="text"
