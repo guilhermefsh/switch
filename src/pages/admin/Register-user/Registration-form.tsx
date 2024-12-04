@@ -15,7 +15,7 @@ const schema = z.object({
     name: z.string().min(3, "O nome deve conter no mínimo 3 caracteres"),
     email: z.string().email("Insira um email válido"),
     password: z.string().min(8, "A senha deve conter no mínimo 8 caracteres").max(30),
-    role: z.enum(["admin", "empresa"]).optional(),
+    role: z.enum(["admin", "empresa", "usuario"]).optional(),
 })
 
 type RegistrationFormData = z.infer<typeof schema>
@@ -115,6 +115,7 @@ export const RegistrationForm = () => {
                     <SelectContent>
                         <SelectItem value="admin">Admin</SelectItem>
                         <SelectItem value="empresa">Empresa</SelectItem>
+                        <SelectItem value="usuario">Usuário</SelectItem>
                     </SelectContent>
                 </Select>
                 {errors.role && <p className="text-red-500">{errors.role.message}</p>}

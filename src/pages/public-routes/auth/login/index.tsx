@@ -3,11 +3,10 @@ import { Input } from "@/components/ui/input"
 import { auth } from "@/database/database"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { signInWithEmailAndPassword } from "firebase/auth"
 import { RefreshCw } from "lucide-react"
-import { useEffect } from "react"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { z } from 'zod'
 
@@ -28,19 +27,15 @@ export const Login = () => {
         resolver: zodResolver(signInProps)
     });
 
-    useEffect(() => {
-        async function handleLogout() {
-            await signOut(auth)
-        }
-
-        handleLogout()
-    }, [])
+    const handleNavigateToSignUp = () => {
+        navigate("/app/home")
+    }
 
     async function handleLogin(user: SignInForm) {
         try {
             await signInWithEmailAndPassword(auth, user.email, user.password)
             toast.success("Login realizado com sucesso!")
-            navigate("/app/home")
+            handleNavigateToSignUp()
         } catch (error) {
             toast.error("Falha ao realizar o login. Verifique suas credenciais.")
         }
@@ -61,7 +56,10 @@ export const Login = () => {
                     <h1 className="text-4xl font-bold text-white tracking-wider">SWITCH</h1>
                 </div>
 
-                <form onSubmit={handleSubmit(handleLogin)} className="bg-indigo-900/30 backdrop-blur-sm rounded-lg p-8 lg:p-12">
+                <form onSubmit={(event) => {
+                    event.preventDefault();
+                    handleSubmit(handleLogin)(event);
+                }} className="bg-indigo-900/30 backdrop-blur-sm rounded-lg p-8 lg:p-12">
                     <div className="space-y-6 max-w-md mx-auto">
                         <div className="space-y-2 text-center">
                             <h2 className="text-2xl font-semibold text-white">LOGIN</h2>

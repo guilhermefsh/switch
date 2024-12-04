@@ -130,7 +130,7 @@ export const Chat = () => {
                         </Button>
                         <Button onClick={handleSendMessage}>
                             <Send className="h-5 w-5 mr-2" />
-                            Send
+                            Enviar
                         </Button>
                     </div>
                 </footer>

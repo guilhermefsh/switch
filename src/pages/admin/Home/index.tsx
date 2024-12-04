@@ -6,11 +6,10 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import { ChevronRight } from 'lucide-react'
 import { useState } from "react"
-import { Calendar } from "./Calendar"
 import { Notes } from "./notes"
 import { Tasks } from "./Task"
 
-type ComponentType = 'Notificações' | 'Calendario' | 'Notas' | 'Tarefas'
+type ComponentType = 'Notificações' | 'Notas' | 'Tarefas'
 
 export const Home = () => {
     const [notifications, setNotifications] = useState([
@@ -25,8 +24,6 @@ export const Home = () => {
 
     const renderComponent = () => {
         switch (selectedComponent) {
-            case 'Calendario':
-                return <Calendar />
             case 'Notas':
                 return <Notes />
             case 'Tarefas':
@@ -72,7 +69,6 @@ export const Home = () => {
                         <div className="flex justify-between items-center mb-4">
                             <h2 className="text-xl sm:text-2xl font-semibold text-white">{selectedComponent}</h2>
                             <div className="flex gap-3 text-lg font-semibold text-purple-400">
-                                <button onClick={() => setSelectedComponent('Calendario')} className="hover:text-white transition-colors">Calendário</button>
                                 <button onClick={() => setSelectedComponent('Notas')} className="hover:text-white transition-colors">Anotações</button>
                                 <button onClick={() => setSelectedComponent('Tarefas')} className="hover:text-white transition-colors">Tarefas</button>
                             </div>

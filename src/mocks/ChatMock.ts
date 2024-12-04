@@ -1,10 +1,10 @@
 import { Conversation, Message, User } from "@/pages/admin/Chat/interfaces"
 
 export const users: User[] = [
-    { id: '1', name: 'Alice Johnson', avatar: '/placeholder.svg?height=40&width=40', status: 'online' },
-    { id: '2', name: 'Bob Smith', avatar: '/placeholder.svg?height=40&width=40', status: 'ocupado' },
-    { id: '3', name: 'Charlie Brown', avatar: '/placeholder.svg?height=40&width=40', status: 'ausente' },
-    { id: '4', name: 'David Lee', avatar: '/placeholder.svg?height=40&width=40', status: 'offline' },
+    { id: '1', name: 'Gabriel', avatar: '/placeholder.svg?height=40&width=40', status: 'online' },
+    { id: '2', name: 'Vitor', avatar: '/placeholder.svg?height=40&width=40', status: 'ocupado' },
+    { id: '3', name: 'Companhia e Cia', avatar: '/placeholder.svg?height=40&width=40', status: 'ausente' },
+    { id: '4', name: 'David', avatar: '/placeholder.svg?height=40&width=40', status: 'offline' },
 ]
 
 export const initialConversations: Conversation[] = [
